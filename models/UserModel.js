@@ -5,7 +5,6 @@ const Task = function (task) {
 
 Task.checkLogin = function checkLogin(data) {
     return new Promise(function (resolve) {
-        console.log("checkLogin :", data);
         const sql = `SELECT *
             FROM tb_user
             WHERE user_username = ${connection.escape(data.user_username)}
@@ -73,7 +72,6 @@ Task.checkUsernameBy = function acheckUsernameBy(data) {
             WHERE user_username  = ${connection.escape(data.user_username)}
             ${condition}
                  `
-        console.log("");
         connection.query(sql, function (err, res) {
             if (err) {
                 const require = { data: [], error: err, query_result: false, server_result: true, };
@@ -147,8 +145,6 @@ Task.updateUser = function updateUser(data) {
 Task.deleteUserByID = function deleteUserByID(data) {
     return new Promise(function (resolve) {
         const sql = `DELETE FROM tb_user WHERE user_id = ${connection.escape(data.user_id)} ;`
-        console.log("deleteUserByID", sql);
-
         connection.query(sql, function (err, res) {
             if (err) {
                 const require = { data: [], error: err, query_result: false, server_result: true, };

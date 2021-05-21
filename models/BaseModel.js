@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
     user: 'root',
     port: 3306,
     password: 'root123456',
-    database: 'db_swine',
+    database: 'react_demo',
     multipleStatements: true,
 })
 
