@@ -6,12 +6,16 @@ Task.checkLogin = async function checkLogin(data) {
     const result = await user_model.checkLogin(data);
     return result
 }
+Task.getUserLastCode = async function getUserLastCode(data) {
+    const result = await user_model.getUserLastCode(data);
+    return result
+}
 Task.getUserBy = async function getUserBy(data) {
     const result = await user_model.getUserBy(data);
     return result
 }
-Task.getUserByID = async function getUserByID(data) {
-    const result = await user_model.getUserByID(data);
+Task.getUserByCode = async function getUserByCode(data) {
+    const result = await user_model.getUserByCode(data);
     return result
 }
 Task.checkUsernameBy = async function checkUsernameBy(data) {
@@ -26,8 +30,8 @@ Task.updateUser = async function updateUser(data) {
     const result = await user_model.updateUser(data);
     return result
 }
-Task.deleteUserByID = async function deleteUserByID(data) {
-    const result = await user_model.deleteUserByID(data);
+Task.deleteUserByCode = async function deleteUserByCode(data) {
+    const result = await user_model.deleteUserByCode(data);
     return result
 }
 

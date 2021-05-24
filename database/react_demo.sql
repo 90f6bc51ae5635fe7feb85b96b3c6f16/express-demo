@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 21, 2021 at 07:25 AM
+-- Generation Time: May 24, 2021 at 02:33 AM
 -- Server version: 5.7.15-log
 -- PHP Version: 5.6.26
 
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tb_user` (
-  `user_id` int(15) NOT NULL COMMENT 'ลำดับ account',
+  `user_code` varchar(50) NOT NULL,
   `user_prename` varchar(10) NOT NULL COMMENT 'คำนำหน้าชื่อ',
   `user_name` varchar(50) NOT NULL COMMENT 'ชื่อ',
   `user_lastname` varchar(50) NOT NULL COMMENT 'สกุล',
@@ -35,6 +35,7 @@ CREATE TABLE `tb_user` (
   `user_password` varchar(15) NOT NULL COMMENT 'รหัสผ่านเข้าระบบ',
   `user_type_id` int(11) NOT NULL COMMENT 'สิทธิการเข้าใช้งานระบบ',
   `user_active` varchar(5) NOT NULL COMMENT 'สถานะของผู้ใช้',
+  `user_image` varchar(200) NOT NULL,
   `farm_id` int(15) NOT NULL COMMENT 'รหัสของฟาม'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -42,8 +43,8 @@ CREATE TABLE `tb_user` (
 -- Dumping data for table `tb_user`
 --
 
-INSERT INTO `tb_user` (`user_id`, `user_prename`, `user_name`, `user_lastname`, `user_username`, `user_password`, `user_type_id`, `user_active`, `farm_id`) VALUES
-(1, 'นาย', 'อาทิตย์', 'ไกรนอก', 'admin', '123456', 1, '1', 1);
+INSERT INTO `tb_user` (`user_code`, `user_prename`, `user_name`, `user_lastname`, `user_username`, `user_password`, `user_type_id`, `user_active`, `user_image`, `farm_id`) VALUES
+('US20210001', 'นาย', 'อาทิตย์', 'ไกรนอก', 'admin', '123456', 1, '1', '', 1);
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,7 @@ INSERT INTO `tb_user_type` (`user_type_id`, `user_type_name`) VALUES
 -- Indexes for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_code`);
 
 --
 -- Indexes for table `tb_user_type`
@@ -79,15 +80,6 @@ ALTER TABLE `tb_user`
 ALTER TABLE `tb_user_type`
   ADD PRIMARY KEY (`user_type_id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tb_user`
---
-ALTER TABLE `tb_user`
-  MODIFY `user_id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'ลำดับ account', AUTO_INCREMENT=30;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

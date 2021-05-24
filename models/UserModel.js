@@ -21,11 +21,30 @@ Task.checkLogin = function checkLogin(data) {
         })
     })
 }
+
+Task.getUserLastCode = function getUserLastCode(data) {
+    return new Promise(function (resolve) {
+        var sql = `SELECT CONCAT(${connection.escape(data.code)}, LPAD(IFNULL(MAX(CAST(SUBSTRING(user_code,${data.code.length + 1},${data.digit}) AS SIGNED)),0) + 1,${data.digit},0)) AS last_code 
+                FROM tb_user 
+                WHERE user_code LIKE (${connection.escape(`${data.code}%`)}) 
+                `;
+        connection.query(sql, function (err, res) {
+            if (err) {
+                const require = { data: [], error: err, query_result: false, server_result: true, };
+                resolve(require);
+            } else {
+                const require = { data: res[0].last_code, error: [], query_result: true, server_result: true, };
+                resolve(require);
+            }
+        });
+    });
+}
+
 Task.getUserBy = function getUserBy(data) {
     return new Promise(function (resolve) {
         let condition = ''
         if (data.keyword === undefined) data.keyword = ''
-        if (data.user_id !== '' && data.user_id !== undefined) condition += `AND user_id = '${data.user_id}' `
+        if (data.user_code !== '' && data.user_code !== undefined) condition += `AND user_code = '${data.user_code}' `
         if (data.user_type_id !== '' && data.user_type_id !== undefined) condition += `AND user_type_id = '${data.user_type_id}' `
         if (data.user_active !== '' && data.user_active !== undefined) condition += `AND user_active = '${data.user_active}' `
         if (data.farm_id !== '' && data.farm_id !== undefined) condition += `AND farm_id = '${data.farm_id}' `
@@ -46,11 +65,11 @@ Task.getUserBy = function getUserBy(data) {
         });
     });
 }
-Task.getUserByID = function getUserByID(data) {
+Task.getUserByCode = function getUserByCode(data) {
     return new Promise(function (resolve) {
         const sql = `SELECT * 
             FROM tb_user
-            WHERE user_id  = ${connection.escape(data.user_id)}
+            WHERE user_code  = ${connection.escape(data.user_code)}
                     `
         connection.query(sql, function (err, res) {
             if (err) {
@@ -65,7 +84,7 @@ Task.getUserByID = function getUserByID(data) {
 }
 Task.checkUsernameBy = function acheckUsernameBy(data) {
     let condition = ''
-    if (data.user_id !== '' && data.user_id !== undefined) condition += `AND user_id = '${data.user_id}' `
+    if (data.user_code !== '' && data.user_code !== undefined) condition += `AND user_code = '${data.user_code}' `
     return new Promise(function (resolve) {
         const sql = `SELECT * 
             FROM tb_user
@@ -88,6 +107,7 @@ Task.checkUsernameBy = function acheckUsernameBy(data) {
 Task.insertUser = function insertUser(data) {
     return new Promise(function (resolve) {
         const sql = `INSERT INTO tb_user (
+            user_code,
             user_prename,
             user_name,
             user_lastname,
@@ -95,8 +115,9 @@ Task.insertUser = function insertUser(data) {
             user_password,
             user_type_id,
             user_active,
-            farm_id
+            user_image
             ) VALUES (
+            ${connection.escape(data.user_code)},
             ${connection.escape(data.user_prename)},
             ${connection.escape(data.user_name)},
             ${connection.escape(data.user_lastname)},
@@ -104,7 +125,7 @@ Task.insertUser = function insertUser(data) {
             ${connection.escape(data.user_password)},
             ${connection.escape(data.user_type_id)},
             ${connection.escape(data.user_active)},
-            ${connection.escape(data.farm_id)}
+            ${connection.escape(data.user_image)}
             );
             `
         connection.query(sql, function (err, res) {
@@ -128,8 +149,8 @@ Task.updateUser = function updateUser(data) {
             user_password = ${connection.escape(data.user_password)},
             user_type_id = ${connection.escape(data.user_type_id)},
             user_active = ${connection.escape(data.user_active)},
-            farm_id = ${connection.escape(data.farm_id)}
-            WHERE user_id = ${connection.escape(data.user_id)}
+            user_image = ${connection.escape(data.user_image)}
+            WHERE user_code = ${connection.escape(data.user_code)}
             ;`
         connection.query(sql, function (err, res) {
             if (err) {
@@ -142,9 +163,9 @@ Task.updateUser = function updateUser(data) {
         })
     })
 }
-Task.deleteUserByID = function deleteUserByID(data) {
+Task.deleteUserByCode = function deleteUserByCode(data) {
     return new Promise(function (resolve) {
-        const sql = `DELETE FROM tb_user WHERE user_id = ${connection.escape(data.user_id)} ;`
+        const sql = `DELETE FROM tb_user WHERE user_code = ${connection.escape(data.user_code)} ;`
         connection.query(sql, function (err, res) {
             if (err) {
                 const require = { data: [], error: err, query_result: false, server_result: true, };

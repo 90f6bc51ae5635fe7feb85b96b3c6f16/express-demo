@@ -6,12 +6,16 @@ module.exports = function (app) {
         const result = await user_controller.checkLogin(req.body)
         res.send(result)
     })
+    app.post('/user/getUserLastCode', async function (req, res) {
+        const result = await user_controller.getUserLastCode(req.body)
+        res.send(result)
+    })
     app.post('/user/getUserBy', async function (req, res) {
         const result = await user_controller.getUserBy(req.body)
         res.send(result)
     })
-    app.post('/user/getUserByID', async function (req, res) {
-        const result = await user_controller.getUserByID(req.body)
+    app.post('/user/getUserByCode', async function (req, res) {
+        const result = await user_controller.getUserByCode(req.body)
         res.send(result)
     })
     app.post('/user/checkUsernameBy', async function (req, res) {
@@ -26,8 +30,8 @@ module.exports = function (app) {
         const result = await user_controller.updateUser(req.body)
         res.send(result)
     })
-    app.post('/user/deleteUserByID', async function (req, res) {
-        const result = await user_controller.deleteUserByID(req.body)
+    app.post('/user/deleteUserByCode', async function (req, res) {
+        const result = await user_controller.deleteUserByCode(req.body)
         res.send(result)
     })
 
