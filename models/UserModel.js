@@ -113,7 +113,7 @@ Task.insertUser = function insertUser(data) {
             user_lastname,
             user_username,
             user_password,
-            user_type_id,
+            user_type_code,
             user_active,
             user_image
             ) VALUES (
@@ -123,7 +123,7 @@ Task.insertUser = function insertUser(data) {
             ${connection.escape(data.user_lastname)},
             ${connection.escape(data.user_username)},
             ${connection.escape(data.user_password)},
-            ${connection.escape(data.user_type_id)},
+            ${connection.escape(data.user_type_code)},
             ${connection.escape(data.user_active)},
             ${connection.escape(data.user_image)}
             );
@@ -147,7 +147,7 @@ Task.updateUser = function updateUser(data) {
             user_lastname = ${connection.escape(data.user_lastname)},
             user_username = ${connection.escape(data.user_username)},
             user_password = ${connection.escape(data.user_password)},
-            user_type_id = ${connection.escape(data.user_type_id)},
+            user_type_code = ${connection.escape(data.user_type_code)},
             user_active = ${connection.escape(data.user_active)},
             user_image = ${connection.escape(data.user_image)}
             WHERE user_code = ${connection.escape(data.user_code)}
