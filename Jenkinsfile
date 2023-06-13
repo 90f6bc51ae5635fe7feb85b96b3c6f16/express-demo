@@ -10,7 +10,7 @@ pipeline {
             steps{
                   container('nodejs'){
                       sh """
-                          npm install --verbose
+                          npm install
                           """
                   }
             }
