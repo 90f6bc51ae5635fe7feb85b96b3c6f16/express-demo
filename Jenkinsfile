@@ -6,11 +6,6 @@ pipeline {
                 echo 'Hello World'
             }
         }
-        stage('set-env') {
-            steps {
-                setenv()
-            }
-          }
         stage('install'){
             steps{
                   container('nodejs'){
