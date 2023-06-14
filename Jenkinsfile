@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'docker ps'
+                sh 'node --version'
             }
         }
     }
