@@ -1,8 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs-14.6.0',
-        docker 'docker'
+        nodejs 'nodejs-14.6.0'
     }
     stages {
         stage('Test node') {
