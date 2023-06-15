@@ -19,7 +19,7 @@ pipeline {
         
         stage('Test Docker') {
             steps {
-                sh 'docker ps'
+                sh 'docker --version'
             }
         }
         stage('build && push-registry'){
