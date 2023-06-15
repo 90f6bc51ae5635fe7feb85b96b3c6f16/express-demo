@@ -24,9 +24,10 @@ pipeline {
         }
         stage('build && push-registry'){
             steps{
-                sh 'docker build -f "Dockerfile" -t http://141.98.19.42:5000/service/express-demo .'
-                sh 'docker login  -u root -p Qwerty1@#$ http://141.98.19.42:5000'
-                sh 'docker push http://141.98.19.42:5000/service/express-demo'
+                sh 'docker build .'
+                sh 'docker tag 141.98.19.42:5000/service/express-demo .'
+                sh 'docker login http://141.98.19.42:5000 -u root -p Qwerty1@#$'
+                sh 'docker push 141.98.19.42:5000/service/express-demo'
             }
 
         }
