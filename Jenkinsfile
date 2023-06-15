@@ -10,12 +10,9 @@ pipeline {
             }
         }
         stage('install'){
-        steps{
-                    sh """
-
-                        npm install --verbose
-                        """
-            }
+                steps{
+                    sh 'npm install --verbose'
+                }
         }
         stages {
             stage('Test Docker') {
