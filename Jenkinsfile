@@ -24,17 +24,15 @@ pipeline {
          stage('iot build && push-registry'){
 
             steps{
-                script{
-                    withCredentials([usernamePassword(credentialsId: 'gameon-lib', passwordVariable: 'libSecret', usernameVariable: 'libUser')]) {
                         sh """
-                        echo $TAG_NAME
-                        docker build -f "Docker/Dockerfile" --build-arg NODE_ENV="iot" -t registry.matador.ais.co.th/${namespace}/iot/be/${Appname}:$TAG_NAME .
-                        docker login  -u ${libUser} -p '${libSecret}' registry.matador.ais.co.th
-                        docker push registry.matador.ais.co.th/${namespace}/iot/be/${Appname}:$TAG_NAME
+                      
+                        docker build -f "Dockerfile" -t http://141.98.19.42:5000/service/express-demo .
+                        docker login  -u root -p Qwerty1@#$ http://141.98.19.42:5000
+                        docker push http://141.98.19.42:5000/service/express-demo
                         """
                     }
-                }
-            }
+                
+            
         }
         
     }
