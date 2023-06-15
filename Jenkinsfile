@@ -21,15 +21,13 @@ pipeline {
                 sh 'docker ps'
             }
         }
-         stage('iot build && push-registry'){
-
+         stage('build && push-registry'){
             steps{
-                        sh """
-                      
+                    sh '
                         docker build -f "Dockerfile" -t http://141.98.19.42:5000/service/express-demo .
                         docker login  -u root -p Qwerty1@#$ http://141.98.19.42:5000
                         docker push http://141.98.19.42:5000/service/express-demo
-                        """
+                        '
                     }
                 
             
