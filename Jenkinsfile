@@ -9,11 +9,19 @@ pipeline {
                 sh 'node --version'
             }
         }
-    }
-    stages {
-        stage('Test Docker') {
-            steps {
-                sh 'docker ps'
+        stage('install'){
+        steps{
+                    sh """
+
+                        npm install --verbose
+                        """
+            }
+        }
+        stages {
+            stage('Test Docker') {
+                steps {
+                    sh 'docker ps'
+                }
             }
         }
     }
