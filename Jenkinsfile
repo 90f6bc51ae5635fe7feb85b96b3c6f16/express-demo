@@ -1,10 +1,20 @@
 pipeline {
     agent any
     tools {
-        docker 'docker-17.09.1-ce'
+        maven 'maven-3.9.2'
     }
     stages {
-
+        stage('Test node') {
+            steps {
+                sh 'node --version'
+            }
+        }
+        stage('install'){
+            steps{
+                sh 'npm install --verbose'
+            }
+        }
+        
         stage('Test Docker') {
             steps {
                 sh 'docker ps'
