@@ -23,7 +23,7 @@ pipeline {
         }
         stage('build && push-registry'){
             steps{
-                sh 'docker build -f Dockerfile .'
+                sh 'docker build -f Dockerfile  --build-arg .'
                 sh 'docker tag 141.98.19.42:5000/service/express-demo .'
                 sh 'docker login  -u root -p Qwerty1@#$ http://141.98.19.42:5000'
                 sh 'docker push 141.98.19.42:5000/service/express-demo'
