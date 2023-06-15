@@ -14,12 +14,12 @@ pipeline {
                     sh 'npm install --verbose'
                 }
         }
-        stages {
-            stage('Test Docker') {
-                steps {
-                    sh 'docker ps'
-                }
+        
+        stage('Test Docker') {
+            steps {
+                sh 'docker ps'
             }
         }
+        
     }
 }
