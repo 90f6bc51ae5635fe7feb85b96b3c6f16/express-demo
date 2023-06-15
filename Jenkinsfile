@@ -3,7 +3,7 @@ pipeline {
     tools {
         nodejs 'nodejs-14.6.0'
         maven 'maven-3.9.2'
-        dockerjs 'docker-17.09.1-ce'
+        dockerTool 'docker-17.09.1-ce'
     }
     stages {
         stage('Test node') {
