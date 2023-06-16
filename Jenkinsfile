@@ -5,16 +5,6 @@ pipeline {
         dockerTool 'docker-17.09.1-ce'
     }
     stages {
-        stage('Test node') {
-            steps {
-                sh 'node --version'
-            }
-        }
-        stage('Test Docker') {
-            steps {
-                sh 'docker --version'
-            }
-        }
         stage('build && push-registry'){
             steps{
 
