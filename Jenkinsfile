@@ -16,11 +16,18 @@ pipeline {
             }
         }
         stage('build && push-registry'){
-            withCredentials([usernamePassword(credentialsId: 'user-docker', passwordVariable: 'libSecret', usernameVariable: 'libUser')]) {
-                steps{
-                    sh 'docker build -f Dockerfile -t 141.98.19.42:5000/service/express-demo .'
-                    sh 'docker login  -u '${libUser}' -p '${libSecret}'  http://141.98.19.42:5000'
-                    sh 'docker push 141.98.19.42:5000/service/express-demo'
+            steps{
+
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'user-docker', passwordVariable: 'libSecret', usernameVariable: 'libUser')]) {
+                        
+                            sh """
+                            docker build -f Dockerfile -t 141.98.19.42:5000/service/express-demo .
+                            docker login  -u ${libUser} -p ${libSecret}  http://141.98.19.42:5000
+                            docker push 141.98.19.42:5000/service/express-demo
+                            """
+                        
+                    }
                 }
             }
         }
