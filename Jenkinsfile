@@ -12,9 +12,9 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'user-docker', passwordVariable: 'libSecret', usernameVariable: 'libUser')]) {
                         
                             sh """
-                            docker build -f Dockerfile -t service/express-demo2 .
+                            docker build -f Dockerfile -t 141.98.19.42:5000/service/express-demo2 .
                             docker login  -u ${libUser} -p ${libSecret}  http://141.98.19.42:5000
-                            docker push service/express-demo2
+                            docker push 141.98.19.42:5000/service/express-demo2
                             """
                         
                     }
