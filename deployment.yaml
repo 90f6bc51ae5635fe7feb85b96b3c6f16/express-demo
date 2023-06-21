@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-demo
+  namespace: iot-revel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-demo
+  template:
+    metadata:
+      labels:
+        app: express-demo
+    spec:
+      containers:
+        - name: express-demo
+          image: maxky2208/express-demo
+          #imagePullPolicy: Always 
+          ports:
+            - containerPort: 3001
+          resources:
+            limits:
+              cpu: 50m
+              memory: 124Mi
+#      restartPolicy: Always
+#      imagePullSecrets:
+#        - name: regcred3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-demo-service
+  namespace: iot-revel
+spec:
+  type: ClusterIP
+  selector:
+    app: express-demo
+  ports:
+    - name: express-demo
+      port: 3001
+      protocol: TCP
+      targetPort: 3001
