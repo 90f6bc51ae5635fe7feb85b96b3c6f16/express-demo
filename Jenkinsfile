@@ -32,7 +32,7 @@ pipeline {
                     ]) {
 
                         sh """
-                            export KUBECONFIG=${KUBECONFIG}
+                            cp \$KUBECONFIG /.kube/config
                             kubectl -n iot-revel set image deployment/express-demo express-demo=maxky2208/express-demo --record=true
                         
                         """
