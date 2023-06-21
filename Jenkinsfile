@@ -9,18 +9,37 @@ pipeline {
             steps{
 
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'user-docker', passwordVariable: 'libSecret', usernameVariable: 'libUser')]) {
+                    withCredentials([usernamePassword(credentialsId: 'user-docker-hub', passwordVariable: 'libSecret', usernameVariable: 'libUser')
+                    ]) {
                         
                             sh """
-                            docker build -f Dockerfile -t 141.98.19.42:5000/service/express-demo2 .
-                            docker login  -u ${libUser} -p ${libSecret}  http://141.98.19.42:5000
-                            docker push 141.98.19.42:5000/service/express-demo2
+                            docker build -f Dockerfile -t maxky2208/express-demo .
+                            docker login  -u ${libUser} -p ${libSecret} 
+                            docker push maxky2208/express-demo
                             """
-                        
                     }
                 }
             }
         }
         
+    
+    stage('deploy'){
+
+     steps {
+           
+            script {
+                withCredentials([file(credentialsId: 'kube-lib', variable: 'KUBECONFIG')
+                    ]) {
+
+                        sh """
+                            export KUBECONFIG=${KUBECONFIG}
+                            kubectl -n iot-revel set image deployment/express-demo express-demo=maxky2208/express-demo --record=true
+                        
+                        """
+                        }
+                    
+                }
+            }
+        }
     }
 }
