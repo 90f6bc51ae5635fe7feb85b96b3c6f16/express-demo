@@ -12,14 +12,8 @@ pipeline {
                     tty: true
                     resources:
                       requests:
-                        cpu: "500m"
-                        memory: "256Mi"
-                      limits:
-                        memory: "3Gi"
-                        cpu: "2000m"                  
-                volumes:
-                    - name: docker-volume
-                      emptyDir: {}
+                        cpu: "50m"
+                        memory: "128Mi"               
             """
         }
     }
