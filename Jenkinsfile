@@ -22,7 +22,7 @@ pipeline {
                     tty: true
                     env:
                     - name: DOCKER_HOST
-                      value: tcp://localhost:2375
+                      value: tcp://141.98.19.42:2375
                   - name: kubecli
                     image: roffe/kubectl:v1.13.2
                     command: ['cat']
