@@ -34,7 +34,7 @@ pipeline {
     stages {
         stage('build && push-registry'){
             steps{
-                script{
+                // script{
                 // container('docker'){
                     withCredentials([usernamePassword(credentialsId: 'user-docker-hub', passwordVariable: 'libSecret', usernameVariable: 'libUser')
                         ]) {
@@ -45,7 +45,7 @@ pipeline {
                                 docker push maxky2208/express-demo
                                 """
                         }
-                    }
+                    // }
                 // }
             }
         }
