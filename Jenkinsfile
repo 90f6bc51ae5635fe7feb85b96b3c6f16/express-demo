@@ -22,7 +22,7 @@ pipeline {
                     tty: true
                     env:
                     - name: DOCKER_HOST
-                      value: tcp://localhost:58350
+                      value: tcp://localhost:2375
                   - name: kubecli
                     image: roffe/kubectl:v1.13.2
                     command: ['cat']
@@ -40,11 +40,14 @@ pipeline {
             """
         }
     }
+    tools {
+        dockerTool 'docker-17.09.1-ce'
+    }
     stages {
         stage('build && push-registry'){
             steps{
                 script{
-                container('docker'){
+                // container('docker'){
                     withCredentials([usernamePassword(credentialsId: 'user-docker-hub', passwordVariable: 'libSecret', usernameVariable: 'libUser')
                         ]) {
                             
@@ -55,7 +58,7 @@ pipeline {
                                 """
                         }
                     }
-                }
+                // }
             }
         }
 
@@ -65,6 +68,7 @@ pipeline {
                     {
                         container('kubecli'){
                         sh """
+                            export KUBECONFIG=${KUBECONFIG}
                             kubectl -n iot-revel set image deployment/express-demo express-demo=maxky2208/express-demo --record=true
                         
                         """
