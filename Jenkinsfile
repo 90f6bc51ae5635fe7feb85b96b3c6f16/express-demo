@@ -39,14 +39,14 @@ pipeline {
                 // container('docker'){
                     withCredentials([usernamePassword(credentialsId: 'user-docker-hub', passwordVariable: 'libSecret', usernameVariable: 'libUser')
                         ]) {
-                              steps{
+                            //   steps{
                             
                                 sh """
                                 docker build -f Dockerfile -t maxky2208/express-demo .
                                 docker login  -u ${libUser} -p ${libSecret} 
                                 docker push maxky2208/express-demo
                                 """
-                            } 
+                            // } 
                         
                         }
 
@@ -63,7 +63,6 @@ pipeline {
                     {
                         container('kubecli'){
                         sh """
-                            export KUBECONFIG=${KUBECONFIG}
                             kubectl -n iot-revel set image deployment/express-demo express-demo=maxky2208/express-demo --record=true
                         
                         """
