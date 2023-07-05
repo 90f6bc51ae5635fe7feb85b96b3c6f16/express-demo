@@ -65,7 +65,6 @@ pipeline {
                     {
                         container('kubecli'){
                         sh """
-                            export KUBECONFIG=${KUBECONFIG}
                             kubectl -n iot-revel set image deployment/express-demo express-demo=maxky2208/express-demo --record=true
                         
                         """
