@@ -14,15 +14,6 @@ pipeline {
                     command:
                     - cat
                     tty: true
-                  - name: docker
-                    image: docker
-                    alwaysPullImage: false
-                    command:
-                    - cat
-                    tty: true
-                    env:
-                    - name: DOCKER_HOST
-                      value: tcp://localhost:2375
                   - name: kubecli
                     image: roffe/kubectl:v1.13.2
                     command: ['cat']
@@ -34,9 +25,6 @@ pipeline {
                       limits:
                         memory: "256Mi"
                         cpu: "200m"
-                volumes:
-                  - name: docker-volume
-                    emptyDir: {}
             """
         }
     }
