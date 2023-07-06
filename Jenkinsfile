@@ -1,42 +1,54 @@
 pipeline {
     
-    //    agent {
+       agent {
            
-    //     kubernetes {
-    //          yaml """
-    //         apiVersion: v1
-    //         kind: Pod
-    //         spec:
-    //             containers:
-    //               - name: nodejs
-    //                 image: node:14.17.6
-    //                 alwaysPullImage: false
-    //                 command:
-    //                 - cat
-    //                 tty: true
-    //               - name: kubecli
-    //                 image: roffe/kubectl:v1.13.2
-    //                 command: ['cat']
-    //                 tty: true
-    //                 resources:
-    //                   requests:
-    //                     cpu: "100m"
-    //                     memory: "100Mi"
-    //                   limits:
-    //                     memory: "256Mi"
-    //                     cpu: "200m"
-    //         """
-    //     }
-    // }
-    agent any
-    tools {
-        dockerTool 'docker-17.09.1-ce'
+        kubernetes {
+             yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+                containers:
+                  - name: nodejs
+                    image: node:14.17.6
+                    alwaysPullImage: false
+                    command:
+                    - cat
+                    tty: true
+                  - name: docker
+                    image: docker:latest
+                    command:
+                    - cat
+                    tty: true
+                    volumeMounts:
+                    - mountPath: /var/run/docker.sock
+                    name: docker-sock
+                  - name: kubecli
+                    image: roffe/kubectl:v1.13.2
+                    command: ['cat']
+                    tty: true
+                    resources:
+                      requests:
+                        cpu: "100m"
+                        memory: "100Mi"
+                      limits:
+                        memory: "256Mi"
+                        cpu: "200m"
+                volumes:
+                  - name: docker-sock
+                    hostPath:
+                      path: /var/run/docker.sock
+            """
+        }
     }
+    // agent any
+    // tools {
+    //     dockerTool 'docker-17.09.1-ce'
+    // }
     stages {
         stage('build && push-registry'){
             steps{
-                // script{
-                // container('docker'){
+                script{
+                container('docker'){
                     withCredentials([usernamePassword(credentialsId: 'user-docker-hub', passwordVariable: 'libSecret', usernameVariable: 'libUser')
                         ]) {
                             //   steps{
@@ -52,8 +64,8 @@ pipeline {
 
 
       
-                    // }
-                // }
+                    }
+                }
             }
         }
 
