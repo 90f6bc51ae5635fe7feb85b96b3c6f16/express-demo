@@ -1,7 +1,5 @@
 pipeline {
-    
        agent {
-           
         kubernetes {
              yaml """
             apiVersion: v1
@@ -40,10 +38,6 @@ pipeline {
             """
         }
     }
-    // agent any
-    // tools {
-    //     dockerTool 'docker-17.09.1-ce'
-    // }
     stages {
         stage('build && push-registry'){
             steps{
@@ -51,19 +45,12 @@ pipeline {
                 container('docker'){
                     withCredentials([usernamePassword(credentialsId: 'user-docker-hub', passwordVariable: 'libSecret', usernameVariable: 'libUser')
                         ]) {
-                            //   steps{
-                            
-                                sh """
-                                docker build -f Dockerfile -t maxky2208/express-demo .
-                                docker login  -u ${libUser} -p ${libSecret} 
-                                docker push maxky2208/express-demo
-                                """
-                            // } 
-                        
+                            sh """
+                            docker build -f Dockerfile -t maxky2208/express-demo .
+                            docker login  -u ${libUser} -p ${libSecret} 
+                            docker push maxky2208/express-demo
+                            """
                         }
-
-
-      
                     }
                 }
             }
