@@ -21,7 +21,7 @@ pipeline {
                     tty: true
                     volumeMounts:
                     - mountPath: /var/run/docker.sock
-                    name: docker-sock
+                      name: docker-sock
                   - name: kubecli
                     image: roffe/kubectl:v1.13.2
                     command: ['cat']
